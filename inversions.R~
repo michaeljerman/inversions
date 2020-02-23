@@ -1,0 +1,13 @@
+library(tidyverse)
+
+date <- "2002.08.31"
+year <- "2002"
+
+baseURL <- "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aqua_AIRS_Level3/AIRS3SPD.006/"
+
+t <- system(paste0("wget -q -nH -nd ",
+              baseURL, year,
+              ' -O - | grep "',
+              date, '" | cut -f4 -d\\" '), intern=T)
+
+system(paste0("wget --load-cookies ~/.urs_cookies --save-cookies ~/.urs_cookies --keep-session-cookies --content-disposition ", baseURL, year, t[1]))

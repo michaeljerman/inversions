@@ -75,7 +75,7 @@ for (d in 1:length(date_seq)){
         print(date)
     } else {
         print(paste0("No file for ", date))
-        system(paste0("echo ", date, " > missing.txt"))
+        system(paste0("echo ", date, " >> missing.txt"))
     }
 }
     

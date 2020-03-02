@@ -1,9 +1,10 @@
 library(tidyverse)
 library(gdalUtils)
 library(pbapply)
+library(raster)
 
-begin_date <- as.Date("2003/01/01", "%Y/%m/%d")
-end_date <- as.Date("2004/12/31", "%Y/%m/%d")
+begin_date <- as.Date("2006/01/02", "%Y/%m/%d")
+end_date <- as.Date("2006/12/31", "%Y/%m/%d")
 
 date_seq <- seq(from=begin_date, to=end_date, by="day")
 

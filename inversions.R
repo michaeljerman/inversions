@@ -2,7 +2,7 @@ library(tidyverse)
 library(gdalUtils)
 library(raster)
 
-begin_date <- as.Date("2011/04/28", "%Y/%m/%d")
+begin_date <- as.Date("2016/03/20", "%Y/%m/%d")
 end_date <- as.Date("2019/12/31", "%Y/%m/%d")
 
 date_seq <- seq(from=begin_date, to=end_date, by="day")
@@ -21,12 +21,12 @@ for (d in 1:length(date_seq)){
                        ' -O - | grep "',
                        date, '" | cut -f4 -d\\" '), intern=T)
 
-    file <- paste0(baseURL, year, "/", t[1])
+    file <- paste0(baseURL, year, "/", t[grep("(hdf)$", t)][1])
 
     system(paste0("wget --load-cookies ~/.urs_cookies --save-cookies ~/.urs_cookies --auth-no-challenge=on --keep-session-cookies --content-disposition ", file))
 
-    if (t[1] %in% dir()){
-        subs <- get_subdatasets(t[1])
+    if (t[grep("(hdf)$", t)][1] %in% dir()){
+        subs <- get_subdatasets(t[grep("(hdf)$", t)][1])
 
         gdal_translate(subs[19], dst_dataset = "ascend_tmp.tif")
         gdal_translate(subs[197], dst_dataset = "descend_tmp.tif")
@@ -69,7 +69,7 @@ for (d in 1:length(date_seq)){
                                     day,
                                     "_descend.tif"),
                     format="GTiff")
-        system(paste0("rm *tmp.tif* ", t[1]))
+        system(paste0("rm *tmp.tif* ", t[grep("(hdf)$", t)][1]))
 
         gc()
         print(date)
